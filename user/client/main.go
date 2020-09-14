@@ -3,10 +3,9 @@ package main
 import (
 	"context"
 	"log"
-	"os"
 	"time"
 
-	pb "github.com/takuya911/gRPC_sample/helloworld"
+	pb "github.com/takuya911/gRPC_sample/user/proto"
 
 	"google.golang.org/grpc"
 )
@@ -19,19 +18,15 @@ func main() {
 	}
 	defer conn.Close()
 
-	c := pb.NewGreeterClient(conn)
+	c := pb.NewUserServiceClient(conn)
 
-	name := "world"
-	if len(os.Args) > 1 {
-		name = os.Args[1]
-	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: name})
+	r, err := c.GetUser(ctx, &pb.GetUserRequest{Id: "1"})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
 
-	log.Printf("Greeting: %s", r.GetMessage())
+	log.Printf(r.GetUser())
 }
