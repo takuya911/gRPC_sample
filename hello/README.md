@@ -1,2 +1,1 @@
-## gRPC sample
-- gRPCを使ってhello worldするだけのサンプル
+## gRPCを使ってhello worldするだけのサンプル
